@@ -6,7 +6,7 @@ class Board:
     def __init__(self):
         self.rows = collections.defaultdict(lambda: collections.defaultdict(bool))
 
-    def isAlive(self, row_index, cell_index):
+    def is_alive(self, row_index, cell_index):
         return (row_index in self.rows) and (cell_index in self.rows[row_index])
 
     def neighbors(self, row_index, cell_index):
@@ -15,7 +15,7 @@ class Board:
             for neighbor_cell_index in range(cell_index - 1, cell_index + 2):
                 if neighbor_row_index == row_index and neighbor_cell_index == cell_index:
                     continue
-                if self.isAlive(neighbor_row_index, neighbor_cell_index):
+                if self.is_alive(neighbor_row_index, neighbor_cell_index):
                     live_neighbors.append((neighbor_row_index, neighbor_cell_index))
                 else:
                     dead_neighbors.append((neighbor_row_index, neighbor_cell_index))
@@ -51,7 +51,7 @@ class Board:
                     self.rows[line_index][char_index] = True
 
     def cell_string(self, row_index, cell_index):
-        return '.' if self.isAlive(row_index, cell_index) else ' '
+        return '.' if self.is_alive(row_index, cell_index) else ' '
 
     def row_string(self, row_index, from_cell, to_cell):
         return ''.join([self.cell_string(row_index, cell_index) for cell_index in range(from_cell, to_cell)])
@@ -62,10 +62,11 @@ class Board:
         print("-" * (to_cell - from_cell + 1))
 
 
-board = Board()
-board.load('undead.txt')
+if __name__ == "__main__":
+    board = Board()
+    board.load('undead.txt')
 
-while True:
-    board.print(0, 10, 0, 20)
-    input("Press Enter to continue...")
-    board.evolve()
+    while True:
+        board.print(0, 10, 0, 20)
+        input("Press Enter to continue...")
+        board.evolve()
